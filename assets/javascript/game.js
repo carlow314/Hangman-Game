@@ -1,18 +1,17 @@
 //Array created for words
 
 var words = ["chicken", "potatoes", "steak", "fish", "lasagna", "fettuccine", "ceviche", "pasta", "oysters"
-, "pizza","salmon"];
+, "pizza","salmon","scallops","poke", "almonds", "carrots","peppers","jalapenos", "tilapia","clams","bolognese"];
 
-//Set inital valus for win, loss, and number of guesses
+//Set global variables
 var win = 0;
-var loss = 0;
-var selectedword, placeholder, splitword, totalLetters;
+var selectedword, placeholder, splitword, totalLetters,correctLetters;
 var guessNumber = 10;
 var alreadyGuessed = [];
 var correctguesses = 0;
 
-//start game
-function initializeGame() {
+//start game/reset variables
+function starthangman() {
 guessNumber = 10;
 alreadyGuessed = [];
 correctguesses = 0;
@@ -32,21 +31,20 @@ correctguesses = 0;
 	};
 //Creates array with the letters of the choosen word
 	splitWord = selectedword.split("");
-
 	totalLetters = splitWord.length;
 };
-initializeGame();
-// Check if user input is only alphabet keys
+starthangman();
+// Check if user input is lowercase letters only
 function lettersOnly() {
 	var charCode = event.keyCode;
-	if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123)) {
+	if ((charCode > 96 && charCode < 123)) {
 		return true;
 	} else {
 		return false;
 	}
 }
-// When the user presses a key, it will run the following function...
-document.onkeyup = function(event) {
+// Key press function of letter choice
+document.onkeypress = function(event) {
 var userGuess = event.key
 
 // Check if the letter has already been used
@@ -67,60 +65,47 @@ if (lettersOnly() == true) {
 	}
 
 // Comparing the user's guess to the letters contained in splitWord array (the picked word)
-	for (var i = 0; i < splitWord.length; i++) {
-		if ((prevGuess()) ==false && (lettersOnly()==true)){
+if ((prevGuess()===false) && (lettersOnly())) {
 
-			if ((userGuess == splitWord[i])) {
-			// console.log ("You guessed " + userGuess);
-			guessNumber--;
-			alreadyGuessed.push(userGuess);
-		}
-		else if ((userGuess !== splitWord[i])) {
-			guessNumber--;
-			alreadyGuessed.push(userGuess);
-		}
+if (splitWord.includes(userGuess)) {
+alreadyGuessed.push(userGuess);
+}
 
-		else if ((prevGuess() == true) || (lettersOnly()==false)) {
-			console.log("Keep guessing");
-		}
-
-	}
+else if (splitWord != userGuess) {
+guessNumber--;
+alreadyGuessed.push(userGuess);
+}
 };
 
-// input correct letter guessed
+
 		for (var i = 0; i < splitWord.length; i++) {
 			if (splitWord[i] == userGuess) {
 				placeholder[i]=placeholder[i].replace(' _', userGuess);
 			}
 		}
 
-//Winner?
 correctLetters=0;
 for (var i = 0; i < splitWord.length; i++) {
 
-		if ((splitWord[i] == placeholder[i])){
+		if ((splitWord[i] === placeholder[i])){
 			correctLetters++;
 
 			if ((totalLetters == correctLetters) && (guessNumber > 0)) {
 				document.querySelector("#selectedword").innerHTML = selectedword
 				win++;
-				initializeGame();
+				starthangman();
 			}
 
-		} else if ((totalLetters !== correctLetters) && (guessNumber == 0)) {
-			document.querySelector("#selectedword").innerHTML = selectedword
-			loss++;
-			initializeGame();
+		} else if ((totalLetters !== correctLetters) && (guessNumber <=0)) {
+			alert("You Lose! The word was:" + " " + selectedword)
+			location.reload();
 		}
 };
 
-
-//spaces displaying for current word
-	    document.querySelector("#word").innerHTML = placeholder;
+//spaces displaying for current word, join function removing seperators of array
+	    document.querySelector("#word").innerHTML = placeholder.join("");
 //amount of wins will display
 		document.querySelector("#wins").innerHTML = win;
-//amount of losses will display
-		document.querySelector("#losses").innerHTML = loss;
 //display amount of guesses left
 		document.querySelector("#guessesleft").innerHTML = guessNumber;
 //display letters guessed so far
