@@ -1,5 +1,4 @@
 //Array created for words
-
 var words = ["chicken", "potatoes", "steak", "fish", "lasagna", "fettuccine", "ceviche", "pasta", "oysters"
 , "pizza","salmon","scallops","poke", "almonds", "carrots","peppers","jalapenos", "tilapia","clams","bolognese"];
 
@@ -20,13 +19,12 @@ correctguesses = 0;
 	for (var i = 0; i < words.length; i++) {
 		var wordindex = Math.floor(Math.random()*words.length);
 		selectedword = words[wordindex];
-		words.splice(wordindex, 1);
+		words.splice(wordindex, 1);//removes word from index
 
 //Generate blanks for selected word
     placeholder = selectedword.split("");
 		for (var i = 0; i < placeholder.length; i++) {
       placeholder[i]=" _";
-      console.log(placeholder);
 			}
 	};
 //Creates array with the letters of the choosen word
@@ -64,7 +62,6 @@ if (lettersOnly() == true) {
 	alert("Please press a letter key only")
 	}
 
-// Comparing the user's guess to the letters contained in splitWord array (the picked word)
 if ((prevGuess()===false) && (lettersOnly())) {
 
 if (splitWord.includes(userGuess)) {
@@ -102,13 +99,13 @@ for (var i = 0; i < splitWord.length; i++) {
 		}
 };
 
-//spaces displaying for current word, join function removing seperators of array
+//shows placeholders for word. Will populate letters as they are guessed
 	    document.querySelector("#word").innerHTML = placeholder.join("");
-//amount of wins will display
+//amount of wins
 		document.querySelector("#wins").innerHTML = win;
-//display amount of guesses left
+//amount of guesses left
 		document.querySelector("#guessesleft").innerHTML = guessNumber;
-//display letters guessed so far
+//letters guessed
 	    var guessedLetters = alreadyGuessed.toString();
 		document.querySelector("#Lettersused").innerHTML = guessedLetters;
 };
