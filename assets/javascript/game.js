@@ -5,15 +5,16 @@ var words = ["chicken", "potatoes", "steak", "fish", "lasagna", "fettuccine", "c
 //Set global variables
 var win = 0;
 var selectedword, placeholder, splitword, totalLetters,correctLetters;
-var guessNumber = 10;
+var guessNumber = 8;
 var alreadyGuessed = [];
 var correctguesses = 0;
 
 //start game/reset variables
 function starthangman() {
-guessNumber = 10;
+guessNumber = 8;
 alreadyGuessed = [];
 correctguesses = 0;
+
 
 
 	for (var i = 0; i < words.length; i++) {
@@ -87,9 +88,14 @@ for (var i = 0; i < splitWord.length; i++) {
 		if ((splitWord[i] === placeholder[i])){
 			correctLetters++;
 
-			if ((totalLetters == correctLetters) && (guessNumber > 0)) {
+			if ((totalLetters == correctLetters) && (guessNumber > 0) && (words.length === 0)) {
+				alert ("You Defeated Hangman! Game over!");
+				location.reload();}
+
+			else if ((totalLetters == correctLetters) && (guessNumber > 0)) {
 				document.querySelector("#selectedword").innerHTML = selectedword
 				win++;
+				 document.getElementById("picture").src="assets/images/chef.jpg";
 				starthangman();
 			}
 
@@ -98,6 +104,7 @@ for (var i = 0; i < splitWord.length; i++) {
 			location.reload();
 		}
 };
+
 
 //shows placeholders for word. Will populate letters as they are guessed
 	    document.querySelector("#word").innerHTML = placeholder.join("");
