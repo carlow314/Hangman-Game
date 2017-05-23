@@ -15,13 +15,12 @@ guessNumber = 10;
 alreadyGuessed = [];
 correctguesses = 0;
 
-//Choose a word at random
+
 	for (var i = 0; i < words.length; i++) {
 		var wordindex = Math.floor(Math.random()*words.length);
 		selectedword = words[wordindex];
-		words.splice(wordindex, 1);//removes word from index
+		words.splice(wordindex, 1);//removes chosen word from index
 
-//Generate blanks for selected word
     placeholder = selectedword.split("");
 		for (var i = 0; i < placeholder.length; i++) {
       placeholder[i]=" _";
@@ -32,6 +31,7 @@ correctguesses = 0;
 	totalLetters = splitWord.length;
 };
 starthangman();
+
 // Check if user input is lowercase letters only
 function lettersOnly() {
 	var charCode = event.keyCode;
